@@ -1,3 +1,22 @@
+<style>
+html, body {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    flex: 1;
+}
+
+footer {
+    margin-top: auto;
+    width: 100%;
+}
+
+</style>
+
+
 <footer class="bg-dark text-white text-center py-3">
         <p>&copy; 2025 École PMN. Tous droits réservés.</p>
     </footer>
