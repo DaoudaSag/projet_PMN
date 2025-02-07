@@ -67,20 +67,20 @@ $blog_posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 <a class="nav-link" href="admin_dashboard.php">Admin</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Dashboard</a>
+                                <a class="nav-link" href="cours.php">Cours</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="cours.php">Cours</a>
+                                <a class="nav-link" href="#">Dashboard</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link btn btn-danger text-white" href="logout.php">Déconnexion</a>
                             </li>
                         <?php else: ?>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Dashboard</a>
+                                <a class="nav-link" href="cours.php">Cours</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="cours.php">Cours</a>
+                                <a class="nav-link" href="#">Dashboard</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link btn btn-danger text-white" href="logout.php">Déconnexion</a>

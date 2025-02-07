@@ -33,6 +33,24 @@ if (isset($_GET['delete_course'])) {
     header('Location: admin_dashboard.php');
     exit();
 }
+
+// Ajout d'un article
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_article'])) {
+    $title = $_POST['article_title'];
+    $content = $_POST['article_content'];
+    $stmt = $pdo->prepare("INSERT INTO blog_posts (title, content, created_at) VALUES (?, ?, NOW())");
+    $stmt->execute([$title, $content]);
+    $_SESSION['message'] = "Article publié avec succès.";
+    $_SESSION['message_type'] = "success";
+    header('Location: admin_dashboard.php');
+    exit();
+}
+
+// Récupération de tous les articles
+$stmt = $pdo->query("SELECT * FROM blog_posts ORDER BY created_at DESC");
+$blog_posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+
 ?>
 
 <!DOCTYPE html>
@@ -67,10 +85,10 @@ if (isset($_GET['delete_course'])) {
                             <a class="nav-link" href="admin_dashboard.php">Admin</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="dashboard.php">Dashboard</a>
-                        </li>
+                                <a class="nav-link" href="cours.php">Cours</a>
+                            </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="cours.php">Cours</a>
+                            <a class="nav-link" href="dashboard.php">Dashboard</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link btn btn-danger text-white" href="logout.php">Déconnexion</a>
@@ -140,7 +158,7 @@ if (isset($_GET['delete_course'])) {
         </div>
 
         <!-- Liste des inscriptions -->
-        <div class="card">
+        <div class="card mb-4">
             <div class="card-header bg-primary text-white">Utilisateurs inscrits aux cours</div>
             <div class="card-body">
                 <table class="table">
@@ -162,7 +180,58 @@ if (isset($_GET['delete_course'])) {
             </div>
         </div>
 
-        <div class="mt-4">
+        <!-- Liste des articles publiés -->
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">Articles publiés</div>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Titre</th>
+                            <th>Contenu</th>
+                            <th>Date de publication</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($blog_posts as $post): ?>
+                            <tr>
+                                <td><?= $post['id']; ?></td>
+                                <td><?= htmlspecialchars($post['title']); ?></td>
+                                <td><?= htmlspecialchars(substr($post['content'], 0, 50)) . '...'; ?></td>
+                                <td><?= $post['created_at']; ?></td>
+                                <td>
+                                    <a href="admin_dashboard.php?delete_article=<?= $post['id']; ?>" class="btn btn-danger btn-sm">Supprimer</a>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+        <!-- Formulaire d'ajout d'article -->
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">Ajouter un article</div>
+            <div class="card-body">
+                <form method="POST">
+                    <div class="mb-3">
+                        <label for="article_title" class="form-label">Titre de l'article</label>
+                        <input type="text" name="article_title" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="article_content" class="form-label">Contenu de l'article</label>
+                        <textarea name="article_content" class="form-control" required></textarea>
+                    </div>
+                    <button type="submit" name="add_article" class="btn btn-success">Publier</button>
+                </form>
+            </div>
+        </div>
+
+
+        <div class="mt-4 text-center">
             <a href="logout.php" class="btn btn-danger">Déconnexion</a>
         </div>
     </div>

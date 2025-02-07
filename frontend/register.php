@@ -41,9 +41,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    
                     <?php if (!isset($_SESSION['user_id'])): ?>
                         <!-- Liens pour les utilisateurs non connectés -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="cours.php">Cours</a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Inscription</a>
                         </li>
@@ -53,10 +55,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <?php else: ?>
                         <!-- Liens pour les utilisateurs connectés -->
                         <li class="nav-item">
+                            <a class="nav-link" href="cours.php">Cours</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="dashboard.php">Dashboard</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="logout.php">Déconnexion</a>
+                            <a class="nav-link btn btn-danger text-white" href="logout.php">Déconnexion</a>
                         </li>
                     <?php endif; ?>
                 </ul>
